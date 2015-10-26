@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Property;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -206,96 +207,121 @@ public final class CustomProgressBar extends View
     }
 
     private void animationAlphaRect() {
-        ObjectAnimator obAlpha = ObjectAnimator.ofInt(this, "alpha", 255, 0, 255, 0, 255, 0);
+        ObjectAnimator obAlpha = ObjectAnimator.ofInt(this, ALPHA, 255, 0, 255, 0, 255, 0);
         obAlpha.setDuration(TIME_ALPHA);
         mAnimatorList.add(obAlpha);
 
-        ObjectAnimator obAlphaCorner = ObjectAnimator.ofInt(this, "alphaCorner",
+        ObjectAnimator obAlphaCorner = ObjectAnimator.ofInt(this, ALPHA_CORNER,
                 255, 0, 255, 0, 255, 0, 255);
         obAlphaCorner.setStartDelay(TIME_ALPHA + 900);
         obAlphaCorner.setDuration(TIME_ALPHA);
         mAnimatorList.add(obAlphaCorner);
     }
 
+
+    public final Property<CustomProgressBar, Integer> ALPHA = new Property<CustomProgressBar, Integer>(Integer.TYPE,"alpha") {
+        @Override
+        public Integer get(CustomProgressBar object) {
+            return null;
+        }
+
+        @Override
+        public void set(CustomProgressBar object, Integer value) {
+            mPCenterSquare.setAlpha(value);
+        }
+    };
+
+    public final Property<CustomProgressBar, Integer> ALPHA_CORNER = new Property<CustomProgressBar, Integer>(Integer.TYPE,"alphaCorner") {
+        @Override
+        public Integer get(CustomProgressBar object) {
+            return null;
+        }
+
+        @Override
+        public void set(CustomProgressBar object, Integer value) {
+            mPCornerSquares.setAlpha(value);
+        }
+    };
+
     private void animationPoint(int center) {
-        ObjectAnimator obRightBottomY = ObjectAnimator.ofInt(mRightBottomPoint, "PointY",
+        ObjectAnimator obRightBottomY = ObjectAnimator.ofInt(mRightBottomPoint, mRightBottomPoint.POINT_Y,
                 mRightBottomPoint.getPointY(), center);
         obRightBottomY.setStartDelay(TIME_ALPHA);
         mAnimatorList.add(obRightBottomY);
 
-        ObjectAnimator obRightBottomX = ObjectAnimator.ofInt(mRightBottomPoint, "PointX",
+        ObjectAnimator obRightBottomX = ObjectAnimator.ofInt(mRightBottomPoint, mRightBottomPoint.POINT_X,
                 mRightBottomPoint.getPointX(), center);
         obRightBottomX.setStartDelay(TIME_ALPHA + 300);
         mAnimatorList.add(obRightBottomX);
 
-        ObjectAnimator obLeftBottomX = ObjectAnimator.ofInt(mLeftBottomPoint, "PointX",
+        ObjectAnimator obLeftBottomX = ObjectAnimator.ofInt(mLeftBottomPoint, mLeftBottomPoint.POINT_X,
                 mLeftBottomPoint.getPointX(), center);
         obLeftBottomX.setStartDelay(TIME_ALPHA + 100);
         mAnimatorList.add(obLeftBottomX);
 
-        ObjectAnimator obLeftBottomY = ObjectAnimator.ofInt(mLeftBottomPoint, "PointY",
+        ObjectAnimator obLeftBottomY = ObjectAnimator.ofInt(mLeftBottomPoint, mLeftBottomPoint.POINT_Y,
                 mLeftBottomPoint.getPointY(), center);
         obLeftBottomY.setStartDelay(TIME_ALPHA + 400);
         mAnimatorList.add(obLeftBottomY);
 
-        ObjectAnimator obLeftTopY = ObjectAnimator.ofInt(mLeftTopPoint, "PointY",
+        ObjectAnimator obLeftTopY = ObjectAnimator.ofInt(mLeftTopPoint, mLeftTopPoint.POINT_Y,
                 mLeftTopPoint.getPointY(), center);
         obLeftTopY.setStartDelay(TIME_ALPHA + 200);
         mAnimatorList.add(obLeftTopY);
 
-        ObjectAnimator obLeftTopX = ObjectAnimator.ofInt(mLeftTopPoint, "PointX",
+        ObjectAnimator obLeftTopX = ObjectAnimator.ofInt(mLeftTopPoint, mLeftTopPoint.POINT_X,
                 mLeftTopPoint.getPointX(), center);
         obLeftTopX.setStartDelay(TIME_ALPHA + 500);
         mAnimatorList.add(obLeftTopX);
 
-        ObjectAnimator obRightTopX = ObjectAnimator.ofInt(mRightTopPoint, "PointX",
+        ObjectAnimator obRightTopX = ObjectAnimator.ofInt(mRightTopPoint, mRightTopPoint.POINT_X,
                 mRightTopPoint.getPointX(), center);
         obRightTopX.setStartDelay(TIME_ALPHA + 300);
         mAnimatorList.add(obRightTopX);
 
-        ObjectAnimator obRightTopY = ObjectAnimator.ofInt(mRightTopPoint, "PointY",
+        ObjectAnimator obRightTopY = ObjectAnimator.ofInt(mRightTopPoint, mRightTopPoint.POINT_Y,
                 mRightTopPoint.getPointY(), center);
         obRightTopY.setStartDelay(TIME_ALPHA + 600);
         mAnimatorList.add(obRightTopY);
     }
 
     private void reversAnimationPoint(int center, int halfRect) {
-        ObjectAnimator obReversRightBottomX = ObjectAnimator.ofInt(mRightBottomPoint, "PointX",
+        ObjectAnimator obReversRightBottomX = ObjectAnimator.ofInt(mRightBottomPoint, mRightBottomPoint.POINT_X,
                 center, halfRect);
         obReversRightBottomX.setStartDelay(TIME_ALPHA * 2 + 900);
         mAnimatorList.add(obReversRightBottomX);
 
-        ObjectAnimator obReversRightBottomY = ObjectAnimator.ofInt(mRightBottomPoint, "PointY",
+        ObjectAnimator obReversRightBottomY = ObjectAnimator.ofInt(mRightBottomPoint, mRightBottomPoint.POINT_Y,
                 center, halfRect);
         obReversRightBottomY.setStartDelay(TIME_ALPHA * 2 + 1200);
         mAnimatorList.add(obReversRightBottomY);
 
-        ObjectAnimator obReversLeftBottomY = ObjectAnimator.ofInt(mLeftBottomPoint, "PointY",
+        ObjectAnimator obReversLeftBottomY = ObjectAnimator.ofInt(mLeftBottomPoint, mLeftBottomPoint.POINT_Y,
                 center, halfRect);
         obReversLeftBottomY.setStartDelay(TIME_ALPHA * 2 + 1000);
         mAnimatorList.add(obReversLeftBottomY);
 
-        ObjectAnimator obReversLeftBottomX = ObjectAnimator.ofInt(mLeftBottomPoint, "PointX",
+        ObjectAnimator obReversLeftBottomX = ObjectAnimator.ofInt(mLeftBottomPoint, mLeftBottomPoint.POINT_X,
                 center, 0);
         obReversLeftBottomX.setStartDelay(TIME_ALPHA * 2 + 1300);
         mAnimatorList.add(obReversLeftBottomX);
 
-        ObjectAnimator obReversLeftTopX = ObjectAnimator.ofInt(mLeftTopPoint, "PointX",
+        ObjectAnimator obReversLeftTopX = ObjectAnimator.ofInt(mLeftTopPoint, mLeftTopPoint.POINT_X,
                 center, 0);
         obReversLeftTopX.setStartDelay(TIME_ALPHA * 2 + 1100);
         mAnimatorList.add(obReversLeftTopX);
 
-        ObjectAnimator obReversLeftTopY = ObjectAnimator.ofInt(mLeftTopPoint, "PointY",
+        ObjectAnimator obReversLeftTopY = ObjectAnimator.ofInt(mLeftTopPoint, mLeftTopPoint.POINT_Y,
                 center, 0);
         obReversLeftTopY.setStartDelay(TIME_ALPHA * 2 + 1400);
         mAnimatorList.add(obReversLeftTopY);
 
-        ObjectAnimator obReversRightTopY = ObjectAnimator.ofInt(mRightTopPoint, "PointY",
+        ObjectAnimator obReversRightTopY = ObjectAnimator.ofInt(mRightTopPoint, mRightTopPoint.POINT_Y,
                 center, 0);
         obReversRightTopY.setStartDelay(TIME_ALPHA * 2 + 1300);
         mAnimatorList.add(obReversRightTopY);
 
-        ObjectAnimator obReversRightTopX = ObjectAnimator.ofInt(mRightTopPoint, "PointX",
+        ObjectAnimator obReversRightTopX = ObjectAnimator.ofInt(mRightTopPoint, mRightTopPoint.POINT_X,
                 center, halfRect);
         obReversRightTopX.setStartDelay(TIME_ALPHA * 2 + 1600);
         mAnimatorList.add(obReversRightTopX);
@@ -308,14 +334,6 @@ public final class CustomProgressBar extends View
             Animator animator = mAnimatorList.get(i);
             ((ObjectAnimator) animator).addUpdateListener(this);
         }
-    }
-
-    public void setAlpha(int alpha) {
-        mPCenterSquare.setAlpha(alpha);
-    }
-
-    public void setAlphaCorner(int alpha) {
-        mPCornerSquares.setAlpha(alpha);
     }
 
     @Override
@@ -347,4 +365,5 @@ public final class CustomProgressBar extends View
     public void setColorRect(int colorRect) {
         mColorRect = colorRect;
     }
+
 }
